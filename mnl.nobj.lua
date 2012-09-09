@@ -9,5 +9,8 @@ ffi_load"mnl",
 
 include "libmnl/libmnl.h",
 
+subfiles {
+"src/socket.nobj.lua",
+},
 }
 

@@ -229,6 +229,9 @@ typedef struct ffi_export_symbol {
 
 
 static obj_type obj_types[] = {
+#define obj_type_id_mnl_socket 0
+#define obj_type_mnl_socket (obj_types[obj_type_id_mnl_socket])
+  { NULL, 0, OBJ_TYPE_FLAG_WEAK_REF, "mnl_socket" },
   {NULL, -1, 0, NULL},
 };
 
@@ -1139,11 +1142,191 @@ static char *obj_interfaces[] = {
 
 
 
+#define obj_type_mnl_socket_check(L, _index) \
+	obj_udata_luacheck(L, _index, &(obj_type_mnl_socket))
+#define obj_type_mnl_socket_optional(L, _index) \
+	obj_udata_luaoptional(L, _index, &(obj_type_mnl_socket))
+#define obj_type_mnl_socket_delete(L, _index, flags) \
+	obj_udata_luadelete_weak(L, _index, &(obj_type_mnl_socket), flags)
+#define obj_type_mnl_socket_push(L, obj, flags) \
+	obj_udata_luapush_weak(L, (void *)obj, &(obj_type_mnl_socket), flags)
 
 
 
+typedef struct mnl_socket mnl_socket;
 
 
+
+/* method: new */
+static int mnl_socket__new__meth(lua_State *L) {
+  int bus_idx1;
+  int this_flags_idx1 = OBJ_UDATA_FLAG_OWN;
+  mnl_socket * this_idx1;
+  bus_idx1 = luaL_checkinteger(L,1);
+  this_idx1 = mnl_socket_open(bus_idx1);
+  obj_type_mnl_socket_push(L, this_idx1, this_flags_idx1);
+  return 1;
+}
+
+/* method: open */
+static int mnl_socket__open__meth(lua_State *L) {
+  int bus_idx1;
+  int this_flags_idx1 = OBJ_UDATA_FLAG_OWN;
+  mnl_socket * this_idx1;
+  bus_idx1 = luaL_checkinteger(L,1);
+  this_idx1 = mnl_socket_open(bus_idx1);
+  obj_type_mnl_socket_push(L, this_idx1, this_flags_idx1);
+  return 1;
+}
+
+/* method: close */
+static int mnl_socket__close__meth(lua_State *L) {
+  int this_flags_idx1 = 0;
+  mnl_socket * this_idx1;
+  int rc_nflog_close_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_delete(L,1,&(this_flags_idx1));
+  if(!(this_flags_idx1 & OBJ_UDATA_FLAG_OWN)) { return 0; }
+  rc_nflog_close_idx1 = nflog_close(this_idx1);
+  lua_pushinteger(L, rc_nflog_close_idx1);
+  return 1;
+}
+
+/* method: bind */
+static int mnl_socket__bind__meth(lua_State *L) {
+  mnl_socket * this_idx1;
+  unsigned int groups_idx2;
+  pid_t pid_idx3;
+  int rc_mnl_socket_bind_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_check(L,1);
+  groups_idx2 = luaL_checkinteger(L,2);
+  pid_idx3 = luaL_checkinteger(L,3);
+  rc_mnl_socket_bind_idx1 = mnl_socket_bind(this_idx1, groups_idx2, pid_idx3);
+  lua_pushinteger(L, rc_mnl_socket_bind_idx1);
+  return 1;
+}
+
+/* method: get_fd */
+static int mnl_socket__get_fd__meth(lua_State *L) {
+  mnl_socket * this_idx1;
+  int rc_mnl_socket_get_fd_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_check(L,1);
+  rc_mnl_socket_get_fd_idx1 = mnl_socket_get_fd(this_idx1);
+  lua_pushinteger(L, rc_mnl_socket_get_fd_idx1);
+  return 1;
+}
+
+/* method: get_portid */
+static int mnl_socket__get_portid__meth(lua_State *L) {
+  mnl_socket * this_idx1;
+  unsigned int rc_mnl_socket_get_portid_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_check(L,1);
+  rc_mnl_socket_get_portid_idx1 = mnl_socket_get_portid(this_idx1);
+  lua_pushinteger(L, rc_mnl_socket_get_portid_idx1);
+  return 1;
+}
+
+/* method: sendto */
+static int mnl_socket__sendto__meth(lua_State *L) {
+  mnl_socket * this_idx1;
+  const void * req_idx2;
+  size_t siz_idx3;
+  ssize_t rc_mnl_socket_sendto_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_check(L,1);
+  req_idx2 = lua_touserdata(L,2);
+  siz_idx3 = luaL_checkinteger(L,3);
+  rc_mnl_socket_sendto_idx1 = mnl_socket_sendto(this_idx1, req_idx2, siz_idx3);
+  lua_pushinteger(L, rc_mnl_socket_sendto_idx1);
+  return 1;
+}
+
+/* method: recvfrom */
+static int mnl_socket__recvfrom__meth(lua_State *L) {
+  mnl_socket * this_idx1;
+  void * req_idx2;
+  size_t siz_idx3;
+  ssize_t rc_mnl_socket_recvfrom_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_check(L,1);
+  req_idx2 = lua_touserdata(L,2);
+  siz_idx3 = luaL_checkinteger(L,3);
+  rc_mnl_socket_recvfrom_idx1 = mnl_socket_recvfrom(this_idx1, req_idx2, siz_idx3);
+  lua_pushinteger(L, rc_mnl_socket_recvfrom_idx1);
+  return 1;
+}
+
+/* method: setsockopt */
+static int mnl_socket__setsockopt__meth(lua_State *L) {
+  mnl_socket * this_idx1;
+  int type_idx2;
+  void * buf_idx3;
+  socklen_t len_idx4;
+  int rc_mnl_socket_setsockopt_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_check(L,1);
+  type_idx2 = luaL_checkinteger(L,2);
+  buf_idx3 = lua_touserdata(L,3);
+  len_idx4 = luaL_checkinteger(L,4);
+  rc_mnl_socket_setsockopt_idx1 = mnl_socket_setsockopt(this_idx1, type_idx2, buf_idx3, len_idx4);
+  lua_pushinteger(L, rc_mnl_socket_setsockopt_idx1);
+  return 1;
+}
+
+/* method: getsockopt */
+static int mnl_socket__getsockopt__meth(lua_State *L) {
+  mnl_socket * this_idx1;
+  int type_idx2;
+  void * buf_idx3;
+  socklen_t * len_idx4;
+  int rc_mnl_socket_getsockopt_idx1 = 0;
+  this_idx1 = obj_type_mnl_socket_check(L,1);
+  type_idx2 = luaL_checkinteger(L,2);
+  buf_idx3 = lua_touserdata(L,3);
+  len_idx4 = lua_touserdata(L,4);
+  rc_mnl_socket_getsockopt_idx1 = mnl_socket_getsockopt(this_idx1, type_idx2, buf_idx3, len_idx4);
+  lua_pushinteger(L, rc_mnl_socket_getsockopt_idx1);
+  return 1;
+}
+
+
+
+static const luaL_reg obj_mnl_socket_pub_funcs[] = {
+  {"new", mnl_socket__new__meth},
+  {"open", mnl_socket__open__meth},
+  {NULL, NULL}
+};
+
+static const luaL_reg obj_mnl_socket_methods[] = {
+  {"close", mnl_socket__close__meth},
+  {"bind", mnl_socket__bind__meth},
+  {"get_fd", mnl_socket__get_fd__meth},
+  {"get_portid", mnl_socket__get_portid__meth},
+  {"sendto", mnl_socket__sendto__meth},
+  {"recvfrom", mnl_socket__recvfrom__meth},
+  {"setsockopt", mnl_socket__setsockopt__meth},
+  {"getsockopt", mnl_socket__getsockopt__meth},
+  {NULL, NULL}
+};
+
+static const luaL_reg obj_mnl_socket_metas[] = {
+  {"__gc", mnl_socket__close__meth},
+  {"__tostring", obj_udata_default_tostring},
+  {"__eq", obj_udata_default_equal},
+  {NULL, NULL}
+};
+
+static const obj_base obj_mnl_socket_bases[] = {
+  {-1, NULL}
+};
+
+static const obj_field obj_mnl_socket_fields[] = {
+  {NULL, 0, 0, 0}
+};
+
+static const obj_const obj_mnl_socket_constants[] = {
+  {NULL, NULL, 0.0 , 0}
+};
+
+static const reg_impl obj_mnl_socket_implements[] = {
+  {NULL, NULL}
+};
 
 static const luaL_reg mnl_function[] = {
   {NULL, NULL}
@@ -1156,6 +1339,7 @@ static const obj_const mnl_constants[] = {
 
 
 static const reg_sub_module reg_sub_modules[] = {
+  { &(obj_type_mnl_socket), REG_OBJECT, obj_mnl_socket_pub_funcs, obj_mnl_socket_methods, obj_mnl_socket_metas, obj_mnl_socket_bases, obj_mnl_socket_fields, obj_mnl_socket_constants, obj_mnl_socket_implements, 0},
   {NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0}
 };
 
