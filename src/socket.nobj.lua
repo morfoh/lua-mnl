@@ -40,7 +40,7 @@ typedef struct mnl_socket mnl_socket;
 	},
 	-- "close" destructor allows freeing of the object before it gets GC'ed
 	destructor "close" {
-		c_method_call "int" "nflog_close" {}
+		c_method_call "int" "mnl_socket_close" {}
 	},
 	-- bind netlink socket
 	method "bind" {
