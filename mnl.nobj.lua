@@ -7,7 +7,7 @@ luajit_ffi = false,
 -- load MNL shared library.
 ffi_load"mnl",
 
-include "libmnl/libmnl.h",
+sys_include "libmnl/libmnl.h",
 
 subfiles {
 "src/socket.nobj.lua",
